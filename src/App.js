@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import Child from "./Child";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [count, setCount] = useState(0);
+	const [todos, setTodos] = useState([]);
+
+	const increment = useCallback(() => {
+		setCount((c) => c + 1);
+	}, [count]);
+
+	const addTodo = useCallback(() => {
+		setTodos((t) => [...t, "New Todo"]);
+	}, [todos]);
+
+	console.log("상위실행");
+
+	return (
+		<>
+			<Child todos={todos} addTodo={addTodo} />
+			<hr />
+			<div>
+				Count: {count}
+				<button onClick={increment}>+</button>
+			</div>
+		</>
+	);
 }
 
 export default App;
